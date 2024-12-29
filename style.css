@@ -1,9 +1,60 @@
-* {
-    box-sizing: border-box;
+/* Allgemeine Seitenstile */
+body {
+    font-family: 'Open Sans', sans-serif;
+    background-color: #323232;
+    color: #ffffff; /* Textfarbe für bessere Lesbarkeit */
+    text-align: center;
     margin: 0;
-    scroll-behavior: smooth;
+    padding: 0;
 }
 
-a {
-    text-decoration: none;
+/* Container für das Spielfeld */
+#content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
 }
+
+/* Tabelle */
+table {
+    border-collapse: collapse; /* Linien nur innerhalb der Tabelle */
+}
+
+/* Tabellenzellen */
+td {
+    width: 64px;
+    height: 64px;
+    text-align: center;
+    vertical-align: middle;
+    border: 5px solid white; /* Weiße Trennlinien */
+    font-size: 40px;
+    font-weight: bold;
+    color: white; /* Schriftfarbe */
+    cursor: pointer;
+}
+
+td:hover{
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+table {
+    border-collapse: collapse;
+  }
+  table td {
+    border: 5px solid white; 
+  }
+  table tr:first-child td {
+    border-top: 0;
+  }
+  table tr td:first-child {
+    border-left: 0;
+  }
+  table tr:last-child td {
+    border-bottom: 0;
+  }
+  table tr td:last-child {
+    border-right: 0;
+  }
+
+  
