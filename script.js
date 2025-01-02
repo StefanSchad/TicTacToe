@@ -61,7 +61,89 @@ function handleClick(index, cell) {
 
         // Entferne die onclick-Funktion des Feldes
         cell.onclick = null;
+
+        // Prüfe, ob das Spiel vorbei ist
+        const winner = checkWinner();
+        if (winner) {
+            drawWinningLine(winner.combination);
+            // alert(`${winner.player} gewinnt!`);
+        }
     }
+}
+
+//Neustart des Spiels
+function restartGame(){
+    fields = [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+    ];
+    render();
+}
+
+// Funktion, die alle möglichen Gewinnkombinationen überprüft
+function checkWinner() {
+    const winningCombinations = [
+        [0, 1, 2], // Erste Reihe
+        [3, 4, 5], // Zweite Reihe
+        [6, 7, 8], // Dritte Reihe
+        [0, 3, 6], // Erste Spalte
+        [1, 4, 7], // Zweite Spalte
+        [2, 5, 8], // Dritte Spalte
+        [0, 4, 8], // Diagonale von oben links nach unten rechts
+        [2, 4, 6], // Diagonale von oben rechts nach unten links
+    ];
+
+    for (let combination of winningCombinations) {
+        const [a, b, c] = combination;
+
+        if (fields[a] && fields[a] === fields[b] && fields[a] === fields[c]) {
+            return { player: fields[a], combination }; // Gibt den Gewinner und die Kombination zurück
+        }
+    }
+
+    return null; // Kein Gewinner
+}
+
+// Funktion, die eine Linie für die Gewinnkombination zeichnet
+function drawWinningLine(combination) {
+    const content = document.getElementById('content');
+    const table = content.querySelector('table');
+    const cells = table.querySelectorAll('td');
+
+    // Hole die Positionen der Zellen der Gewinnkombination
+    const startCell = cells[combination[0]];
+    const endCell = cells[combination[2]];
+
+    // Berechne die Positionen für die Linie
+    const startRect = startCell.getBoundingClientRect();
+    const endRect = endCell.getBoundingClientRect();
+
+    const contentRect = content.getBoundingClientRect();
+
+    const startX = startRect.left + startRect.width / 2 - contentRect.left;
+    const startY = startRect.top + startRect.height / 2 - contentRect.top;
+    const endX = endRect.left + endRect.width / 2 - contentRect.left;
+    const endY = endRect.top + endRect.height / 2 - contentRect.top;
+
+    // Erstelle eine Linie und füge sie in den DOM ein
+    const line = document.createElement('div');
+    line.style.position = 'absolute';
+    line.style.backgroundColor = '#FFFFFF'; // Farbe der Linie
+    line.style.height = '5px';
+    line.style.width = `${Math.sqrt((endX - startX) ** 2 + (endY - startY) ** 2)}px`;
+    line.style.transform = `rotate(${Math.atan2(endY - startY, endX - startX)}rad)`;
+    line.style.transformOrigin = '0 50%';
+    line.style.left = `${startX}px`;
+    line.style.top = `${startY}px`;
+
+    content.appendChild(line);
 }
 
 // Generiert den SVG-Code für einen Kreis

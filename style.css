@@ -57,4 +57,19 @@ table {
     border-right: 0;
   }
 
-  
+#content {
+    position: relative;
+}
+
+button{
+    padding: 16px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    background-color: green;
+}
+
+button:hover{
+    background-color: rgb(118, 207, 77);
+    color: white;
+}
